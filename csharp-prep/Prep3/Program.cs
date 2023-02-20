@@ -5,9 +5,12 @@ class Program
     static void Main(string[] args)
 
     {
-        Console.Write("What is the magic number? ");
-        string magicNumberInput = Console.ReadLine();
-        int magicNumber = int.Parse(magicNumberInput);
+
+        Random randomGenerator= new Random ();
+        int magicNumber = randomGenerator.Next(1, 100);
+//        Console.Write("What is the magic number? ");
+ //       string magicNumberInput = Console.ReadLine();
+ //       int magicNumber = int.Parse(magicNumberInput);
 
         string userInput;
         int guess;
