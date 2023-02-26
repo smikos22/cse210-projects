@@ -2,7 +2,7 @@ using System;
 
 class Entry{
     public List<string> prompts = new List<string>();
-    public string _prompt;
+    public string prompt;
     public string message;
     public Entry()
     {
@@ -10,24 +10,29 @@ class Entry{
         prompts.Add("What was the best part of your day? ");
         prompts.Add("Who did you serve today? ");
         prompts.Add("What blessing are you grateful for today?");
+        prompts.Add("If I had one thing I could do over today, what would it be? ");
 
         Random randomGenerator= new Random ();
-        int promptNumber = randomGenerator.Next(1,4);
-        _prompt = prompts[promptNumber];        
+        int promptNumber = randomGenerator.Next(0,5);
+        prompt = prompts[promptNumber];        
         
     }
-    void writeEntry()
+   public void writeEntry(String file)
 
     {
-       string userInput; 
-       userInput = Console.ReadLine();
-       Console.WriteLine(_prompt); 
+       Console.WriteLine(prompt); 
        message = Console.ReadLine();
 
+       using (StreamWriter OutputFile = new StreamWriter(file, true))
+       {
+        OutputFile.WriteLine($"Promp: {prompt}");
+        OutputFile.WriteLine($"Message: {message}");
+        OutputFile.WriteLine("-------------------");
+       }
     }
     string getPrompt()
     {
-        return _prompt;
+        return prompt;
     }
 
 
@@ -49,19 +54,15 @@ class Program
     {
         Journal journal = new Journal();
         journal.writeJournalEntry();
-        //    public string _entry;
-//    public List<Entry>entryList = new List<Entry>();
-//    public void Display()
-//    {
-//        Console.WriteLine($"1. Write a new entry -");
-//        Console.WriteLine($"2. Display the journal to a file - ");
-//        Console.WriteLine($"3. Save the journal to a file - ");
-//        Console.WriteLine($"4. Load the journal from a file - ");
-//        foreach (Entry entry in _entry)
-//        {
-//            entry.Display();
-//        }
-//    }
+       public string _entry;
+       public List<Entry>entryList = new List<Entry>();
+       public void Display()
+       {
+          Console.WriteLine($"1. Write a new entry -");
+          Console.WriteLine($"2. Display the journal to a file - ");
+          Console.WriteLine($"3. Save the journal to a file - ");
+          Console.WriteLine($"4. Load the journal from a file - ");
+          
+      }
 
     }
-}
