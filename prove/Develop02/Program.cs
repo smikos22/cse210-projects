@@ -61,9 +61,7 @@ class Program
                 Console.WriteLine(menuItem);
             }
             menuUserInput = int.Parse(Console.ReadLine());
-            
             journal.CreateJournalEntry();
-            Console.WriteLine("Breakpoint");
         }
         
         /*Console.WriteLine($"1. Write a new entry -");

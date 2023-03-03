@@ -2,6 +2,7 @@ class PromptGenerator
 {
     public List<string> prompts = new List<string>();
     public string prompt;
+    public string message;
 //    public string message;
 
     public PromptGenerator()
@@ -12,12 +13,28 @@ class PromptGenerator
         prompts.Add("What blessing are you grateful for today?");
         prompts.Add("If I had one thing I could do over today, what would it be? ");
 
+    }
+    public string GetRandomPrompt()
+    {
         Random randomGenerator= new Random ();
         int promptNumber = randomGenerator.Next(0,5);
         prompt = prompts[promptNumber];
     }
-    public string GetRandomPrompt()
+    public string writeEntry()
     {
-        return prompts[0];
+       Console.WriteLine(prompt); 
+       message = Console.ReadLine();
+
+       using (StreamWriter OutputFile = new StreamWriter(file, true))
+       {
+           OutputFile.WriteLine($"Promp: {prompt}");
+           OutputFile.WriteLine($"Message: {message}");
+           OutputFile.WriteLine("-------------------");
+       }
+    }
+
+    string getPrompt()
+    {
+        return prompt;
     }
 }
