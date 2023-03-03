@@ -16,11 +16,12 @@ class Journal
     }
     public void CreateJournalEntry()
     {
+        PromptGenerator generator = new PromptGenerator();
+
+        string prompt = generator.GetRandomPrompt();
         // Create the logic to get the date, prompt and response.
-        Entry entry = new Entry("temp date", "temp prompt", "temp response");
-
+        Entry entry = new Entry("temp date", prompt, "temp response");
         entries.Add(entry);
-
     }
     public void SaveToCSV()
     {
