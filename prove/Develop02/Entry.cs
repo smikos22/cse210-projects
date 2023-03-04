@@ -9,8 +9,21 @@ class Entry
         prompt = _prompt;
         response = _response;
     }
+    public void WriteEntry()
+    {
+        using (StreamWriter OutputFile = new StreamWriter("journal.txt", true))
+       {
+           OutputFile.WriteLine($"Prompt: {prompt}");
+           OutputFile.WriteLine($"Response: {response}");
+           OutputFile.WriteLine("-------------------");
+       }
+    }
+
     public void DisplayEntry()
     {
+           Console.WriteLine($"Prompt: {prompt}");
+           Console.WriteLine($"Response: {response}");
+           Console.WriteLine("-------------------");
 
     }
     public string getEntryAsCSV()

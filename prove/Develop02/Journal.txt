@@ -1,6 +1,0 @@
-Promp: What was the best part of your day? 
-Message: going to church.
--------------------
-Promp: Who did you serve today? 
-Message: The Cactus View Ward
--------------------

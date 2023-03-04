@@ -2,7 +2,6 @@ class PromptGenerator
 {
     public List<string> prompts = new List<string>();
     public string prompt;
-    public string message;
 //    public string message;
 
     public PromptGenerator()
@@ -19,22 +18,6 @@ class PromptGenerator
         Random randomGenerator= new Random ();
         int promptNumber = randomGenerator.Next(0,5);
         prompt = prompts[promptNumber];
-    }
-    public string writeEntry()
-    {
-       Console.WriteLine(prompt); 
-       message = Console.ReadLine();
-
-       using (StreamWriter OutputFile = new StreamWriter(file, true))
-       {
-           OutputFile.WriteLine($"Promp: {prompt}");
-           OutputFile.WriteLine($"Message: {message}");
-           OutputFile.WriteLine("-------------------");
-       }
-    }
-
-    string getPrompt()
-    {
         return prompt;
     }
 }
