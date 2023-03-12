@@ -30,16 +30,6 @@ class Scripture
             verse.HideRandomWords();
         }
 
-/*        if (verseList.Count == 0)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-  //          int index = new Random().Next(verseList.Count);
-  /         return verseList[index].HideRandomWords();
-        }*/  
     }
     public bool IsFullyHidden()
     {
