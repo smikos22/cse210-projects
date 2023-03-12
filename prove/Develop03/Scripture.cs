@@ -25,6 +25,39 @@ class Scripture
     }
     public void HideWords()
     {
+        foreach (Verse verse in verseList)
+        {
+            verse.HideRandomWords();
+        }
 
+/*        if (verseList.Count == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+  //          int index = new Random().Next(verseList.Count);
+  /         return verseList[index].HideRandomWords();
+        }*/  
+    }
+    public bool IsFullyHidden()
+    {
+        bool foundVisibleWord = false;
+        foreach (Verse verse in verseList)
+        {
+            if (verse.AllWordsHidden())
+            {
+                foundVisibleWord = true;
+            }
+        }
+
+        bool fullyHidden = true;
+        if (foundVisibleWord)
+        {
+            fullyHidden = false;
+        }
+        return fullyHidden;
+//        return verseList.All(verseList => verse.IsFullyHidden());
     }
 }

@@ -4,31 +4,39 @@ class Program
 {
     static void Main(string[] args)
     {
-        Reference single_reference = new Reference("Alma", 3,7);
+        Reference single_reference = new Reference("John", 3,16);
 //        Console.WriteLine(single_reference.GetReference());
-        Verse single_verse = new Verse("And their brethren sought to destry them, therefore they were cursed; and the Lord God set a mark upoon them, yea, UriComponents Laman and Lemuel, AbandonedMutexException the sons of Ishmael, AbandonedMutexException Ishmaelitish women.");
-        single_verse.HideRandomWords(); 
+        Verse single_verse = new Verse("For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but havve everlasting life.");
+//        single_verse.HideRandomWords(); 
         Scripture scripture = new Scripture(single_reference, single_verse);
         scripture.ShowScripture();
 //        Console.WriteLine();
         Reference multi_reference = new Reference("Moroni", 10,3,5);
 //        Console.WriteLine(multi_reference.GetReference());
         Console.WriteLine("\n");
+
+
+        while (true)
+        {
+            Console.WriteLine("Press Enter to Continue or type 'quit' to exit.");
+            var input = Console.ReadLine().ToLower();
+
+            if (input == "quit")
+                break;
+            
+            scripture.HideWords();
+            scripture.ShowScripture();
+            
+
+            if (scripture.IsFullyHidden())
+            {
+                Console.WriteLine("All words have been hidden.");
+                break;
+            }
+          
+
+        }
         
-        single_verse.HideRandomWords();
-        scripture.ShowScripture();
-        Console.WriteLine();
-        single_verse.HideRandomWords();
-        scripture.ShowScripture();
-        Console.WriteLine();
-
-        single_verse.HideRandomWords();
-        scripture.ShowScripture();
-        Console.WriteLine();
-
-        single_verse.HideRandomWords();
-        scripture.ShowScripture();
-
     }
 }
         

@@ -24,7 +24,10 @@ class Verse
             {
                 Console.Write($"{word.GetInvisibleWord()} ");
             }
+
         }
+        Console.WriteLine();
+        Console.WriteLine();
     }
     public void HideRandomWords()
     {
@@ -40,5 +43,21 @@ class Verse
 
 
     }
+    public bool AllWordsHidden()
+    {
+        bool foundVisibleWord = false;
+        foreach (Word word in words)
+        {
+            
+            if (word.GetIsVisible())
+            {
+                foundVisibleWord = true;
+            }
+
+        }
+        return foundVisibleWord;
+
+    }
+
 
 }
