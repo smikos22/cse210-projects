@@ -1,14 +1,10 @@
 public class Breathing : Activity
 {
-    protected string _bDescription = "";
-    public Breathing (string commonStartMessage, string bDescription, int activityDuration, string endMessage)
-    :base(commonStartMessage, activityDuration, endMessage)
+    //protected string _bDescription = "";
+    public Breathing (string StartMessage, string description, int activityDuration, string endMessage)
+    :base(StartMessage, description, activityDuration, endMessage)
     {
-        _bDescription = bDescription;
-    }
+        Breathing bMessage = new Breathing("Welcome to the Breathing Activity.", "This activity will help you relax by walking you through breathing in and out slowly. Clear your mind and focus on your breathing.", activityDuration, endMessage);
 
-    public string GetDescription()
-    {
-        return _bDescription;
     }
 }
