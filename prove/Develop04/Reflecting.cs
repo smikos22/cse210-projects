@@ -8,7 +8,7 @@ public class Reflecting : Activity
     public Reflecting (string StartMessage, string description,  int activityDuration, string endMessage)
         :base(StartMessage, description, activityDuration, endMessage)
         {
-            Reflecting rMessage = new Reflecting("Welcome to the Reflecting Activity.", "This activity will help you reflect on times in your life when you have shown strength and resilience. This will help you recognize the power you have and how you can use it in other aspects of your life.", activityDuration, endMessage);
+ //           Reflecting rMessage = new Reflecting("Welcome to the Reflecting Activity.", "This activity will help you reflect on times in your life when you have shown strength and resilience. This will help you recognize the power you have and how you can use it in other aspects of your life.", activityDuration, endMessage);
 
             prompts.Add("Think of a time you stood up for someone else. ");
             prompts.Add("Think of a time when you did something really difficult. ");
@@ -26,13 +26,26 @@ public class Reflecting : Activity
 
         }
 //    public string message;
-
-    public void PromptGenerator()
+    public void RunActivity()
     {
-        prompts.Add("Think of a time you stood up for someone else. ");
-        prompts.Add("Think of a time when you did something really difficult. ");
-        prompts.Add("Think of a time when you helped someone in need. ");
-        prompts.Add("Think of a time when you did something truly selfless.");
+        DateTime currentTime = DateTime.Now;
+        DateTime endTime = currentTime.AddSeconds(_activityDuration);
+        Console.WriteLine("Get ready...");
+        Console.WriteLine("Consider the following prompt:");
+        Console.WriteLine(_activityDuration);
+        GetRandomPrompt();
+        Console.WriteLine (GetRandomPrompt());
+        Console.WriteLine("When you have something in mind, press enter to continue.");
+        Console.ReadLine();
+
+        while (currentTime < endTime)
+        {
+
+            Console.WriteLine(GetRandomQuestion());
+            displaySpinner(6);
+            currentTime = DateTime.Now;
+            Console.WriteLine();
+        }
 
     }
     public string GetRandomPrompt()
@@ -43,14 +56,12 @@ public class Reflecting : Activity
         return prompt;
     }
 
-    public void DisplayQuestions()
+    public string GetRandomQuestion()
     {
-        foreach (string question in questions)
-        {
- //           questions.DisplayQuestions();
-            Console.WriteLine(question);
-        }
-
+        Random randomGenerator= new Random ();
+        int questionNumber = randomGenerator.Next(0,9);
+        question = questions[questionNumber];
+        return question;
     }
-    
+
 }

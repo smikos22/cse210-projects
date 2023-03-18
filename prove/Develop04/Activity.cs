@@ -6,7 +6,7 @@ protected string _startMessage = "";
 protected string _description = "";
 protected int _activityDuration;
 
-protected string _endMessage = "GoodBye";
+protected string _endMessage = "Well done!!";
 protected int spinnerCounter = 0;
 protected int numSecondsToRun;
 
@@ -16,13 +16,20 @@ public Activity (string startMessage, string description, int activityDuration, 
     _description = description;
     _activityDuration = activityDuration;
     _endMessage = endMessage;
+    numSecondsToRun = activityDuration;
 }
 
 public void WriteIntro()
 {
     Console.WriteLine(_startMessage);
+    Console.WriteLine();
     Console.WriteLine(_description);
-    Console.WriteLine(_activityDuration);
+    Console.WriteLine();
+//    Console.WriteLine(_activityDuration);
+}
+public void EndMessage()
+{
+    Console.WriteLine(_endMessage);
 }
 public string GetStartMessage()
 {
@@ -42,9 +49,21 @@ public string GetEndMessage()
 {
     return _endMessage;
 }
+public string SetEndMessage()
+{
+    return _endMessage;
+}
 public int GetNumSecondsToRun()
 {
     return numSecondsToRun;
+}
+public void SetNumSecondsToRun()
+{
+    Console.Write("How long, in seconds, would you like your session? ");
+    _activityDuration = int.Parse(Console.ReadLine());
+    _endMessage = "Great job completeing this activity";
+
+  
 }
 public void displaySpinner(int numSecondsToRun)
     {
