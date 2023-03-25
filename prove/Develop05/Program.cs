@@ -22,6 +22,7 @@ class Program
             };
         while (menuUserInput != 6)
         {
+            Console.WriteLine($"You have {game.GetTotalPoints()} points.\n");
             foreach (string menuItem in menu)
             {
                 Console.WriteLine(menuItem);
@@ -44,7 +45,11 @@ class Program
             else if (menuUserInput == 4)
             {
                 game.LoadGoals();
-            }    
+            }  
+            else if (menuUserInput == 5)
+            {
+                game.RecordEvent();
+            }
             Console.WriteLine();
         }
     

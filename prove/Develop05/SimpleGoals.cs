@@ -1,6 +1,6 @@
 public class SimpleGoals : Goals
 {
-    public SimpleGoals(string goalName, string description, int score): base(goalName, description, score)
+    public SimpleGoals(string goalName, string description, int score, bool isComplete): base(goalName, description, score, isComplete)
     {
 
     }
@@ -10,6 +10,11 @@ public class SimpleGoals : Goals
         Console.WriteLine($"{_goalName}: {_description}");
         Console.WriteLine($"Worth {_score} points");
     }
+    public override int GetBonusScore()
+    {
+        return 0;
+    }
+
     public override void DisplayGoal(int position)
     {
         string mark;
@@ -25,7 +30,15 @@ public class SimpleGoals : Goals
     }
     public override string ToCSVRecord()
     {
-        return $"{base.ToCSVRecord()}";
+        return $"SimpleGoal:{base.ToCSVRecord()},{_isComplete}";
+    }
+    public override string GetGoalType()
+    {
+        return "SimpleGoal";
+    }
+    public override void CompleteGoal()
+    {
+        _isComplete = true;
     }
 
 }

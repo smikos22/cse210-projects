@@ -1,10 +1,15 @@
 public class Game
 {
     private List<Goals> goals = new List<Goals>();
-    private int totalPoints = 0;
+    private string fileName = "goals.txt";
+    private int totalPoints;
     public Game()
     {
-        totalPoints = 0;
+         totalPoints = 0;
+    }
+    public int GetTotalPoints()
+    {
+        return totalPoints;
     }
     public void CreateGoal()
     {
@@ -24,11 +29,26 @@ public class Game
  
         if (goalType == 1)
         {
-        SimpleGoals goal = new SimpleGoals(goalName, goalDescription, goalPoints);
+        SimpleGoals goal = new SimpleGoals(goalName, goalDescription, goalPoints, false);
         goals.Add(goal);
 
         }
- 
+        else if (goalType == 2)
+        {
+            EternalGoals goal = new EternalGoals(goalName, goalDescription, goalPoints);
+            goals.Add(goal);
+        }
+        else if (goalType == 3)
+        {
+            Console.Write("Enter how many times this goal needs to be accomplished for a bonus: ");
+            int timesToDo = int.Parse(Console.ReadLine());
+            Console.Write("What is the bonus for accomplishing the goal it that many times? ");
+            int bonusScore = int.Parse(Console.ReadLine());
+            ChecklistGoals goal = new ChecklistGoals(goalName, goalDescription, goalPoints, bonusScore, timesToDo, 0);
+            goals.Add(goal);
+
+           
+        }
 
     }
     public void ListGoals()
@@ -38,6 +58,8 @@ public class Game
         {
             count++;
             goal.DisplayGoal(count);
+       //    goal.DisplayGoal(count);
+ //      Console.WriteLine(goal.ToCSVRecord());
         }
     }
 
@@ -50,7 +72,21 @@ public class Game
             Console.WriteLine("There are no goals to save. ");
             return;
         }
-        string fileToSave = DisplayGetGoalFile();
+        //calculate the points the user has.
+//        int totalPoints = 0;
+ //       foreach (Goals goal in goals)
+ //       {
+ //           totalPoints += goal.GetScore();
+ //       }
+        using (StreamWriter outputFile = new StreamWriter(fileName))
+        {
+            outputFile.WriteLine(totalPoints);
+            foreach (Goals goal in goals)
+            {
+                outputFile.WriteLine(goal.ToCSVRecord());
+            }
+        }
+/*        string fileToSave = DisplayGetGoalFile();
         List<string> saveGoals = new List<string>();
         totalPoints = goals.Sum(g => g._score);
         saveGoals.Add(totalPoints.ToString());
@@ -61,55 +97,102 @@ public class Game
         SaveLoadCSV.SaveToCSV(saveGoals, fileToSave);
         Console.WriteLine("Goals saved. ");
 
-        
+*/        
     }
     //load from .txt file to goals
     public void LoadGoals()
-{
-    string fileToLoad = DisplayGetGoalFile();
-    List<string> loadedGoals = SaveLoadCSV.LoadFromCSV(fileToLoad);
-
-    if (loadedGoals == null)
     {
-        Console.WriteLine("Failed to load goals from file.");
-        return;
-    }
-
-    goals.Clear();
-    for (int i = 1; i < loadedGoals.Count(); i++)
+    string[] lines = System.IO.File.ReadAllLines(fileName);
+    int cnt = 0;
+    foreach (string line in lines)
     {
-        string[] fields = loadedGoals[i].Split(',');
-        if (fields.Length < 4)
+        if (cnt == 0)
         {
-            Console.WriteLine($"Invalid goal record: {loadedGoals[i]}");
-            continue;
+            Console.WriteLine(line);
+            totalPoints = int.Parse(line);
         }
-
-        int goalType = int.Parse(fields[0]);
-        string goalName = fields[1];
-        string goalDescription = fields[2];
-        int goalPoints = int.Parse(fields[3]);
-
-        switch (goalType)
+        else
         {
-            case 1:
-                SimpleGoals simpleGoal = new SimpleGoals(goalName, goalDescription, goalPoints);
-                goals.Add(simpleGoal);
-                break;
-            // add cases for other types of goals
-            default:
-                Console.WriteLine($"Unknown goal type: {goalType}");
-                break;
+            string[] goalParts = line.Split(":");
+            string goalType = goalParts[0];
+            string goalData = goalParts[1];
+
+            if (goalType == "SimpleGoal")
+            {
+                string[] goalDataParts = goalData.Split(",");
+                SimpleGoals goal = new SimpleGoals(goalDataParts[0], goalDataParts[1], int.Parse(goalDataParts[2]), bool.Parse(goalDataParts[3]));
+
+                goals.Add(goal);
+
+            }
+            else if (goalType == "EternalGoal")
+            {
+                string[] goalDataParts = goalData.Split(",");
+                EternalGoals goal = new EternalGoals(goalDataParts[0], goalDataParts[1], int.Parse(goalDataParts[2]));
+
+                goals.Add(goal);
+
+
+            }
+            else if (goalType =="ChecklistGoal")
+            {
+                string[] s = goalData.Split(",");
+                ChecklistGoals goal = new ChecklistGoals(s[0], s[1], int.Parse(s[2]), int.Parse(s[3]), int.Parse(s[4]), int.Parse(s[5]));
+                goals.Add(goal);
+            }
+            else
+            {
+                Console.WriteLine("Error: GOAL TYPE NOT DETECTED");
+            }
+        }
+        cnt += 1;
+    }
+}
+    public void RecordEvent()
+    {
+        Console.WriteLine("The goals are: ");
+        int cnt = 0;
+        foreach(Goals goal in goals)
+        {
+            cnt += 1;
+            Console.WriteLine($"{cnt}. {goal.GetGoalName()}");
+        }
+        Console.Write("Which goal did you accomplish? ");
+        int goalSelected = int.Parse(Console.ReadLine());
+        cnt = 0;
+        foreach(Goals goal in goals)
+        {
+            cnt += 1;
+            if (cnt == goalSelected)
+            {
+                string goalType = goal.GetGoalType();
+                goal.CompleteGoal();
+
+                if (goalType == "ChecklistGoal")
+                {
+                    if (goal.GetisComplete())
+                    {
+                        Console.WriteLine($"Congratulations! You have earned {goal.GetScore() + goal.GetBonusScore()} points!");
+                        totalPoints += goal.GetScore() + goal.GetBonusScore();
+                        Console.WriteLine($"You now have {totalPoints} points.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Congratulations! You have earned {goal.GetScore()} points.");
+                        totalPoints += goal.GetScore();
+                        Console.WriteLine($"You now have {totalPoints} points.");
+
+                    }
+                }
+                else
+                {
+                //goal.CompleteGoal();
+                    Console.WriteLine($"Congratulations! You have earned {goal.GetScore()} points!");
+                    totalPoints += goal.GetScore();
+                    Console.WriteLine($"You now have {totalPoints} points.");
+                }
+            }
         }
     }
-    Console.WriteLine($"Loaded {goals.Count()} goals.");
-}
-private string DisplayGetGoalFile()
-{
-    Console.Write("Enter file name (without extension): ");
-    string fileName = Console.ReadLine();
-    return $"{fileName}.txt";
-}
-
 
 }
