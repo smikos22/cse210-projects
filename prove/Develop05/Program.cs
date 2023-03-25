@@ -7,6 +7,7 @@ class Program
     {
         int menuUserInput = 0;
         string endMessage = "";
+        Game game = new Game();
 
         List<string> menu = new List<string>
             {
@@ -30,15 +31,21 @@ class Program
 
             if (menuUserInput == 1)
             {
-                string startMessage = "The types of Goals are:";
-                Console.WriteLine(startMessage);
+                game.CreateGoal();
             }
             else if (menuUserInput == 2)
             {
+                game.ListGoals();
             }
             else if (menuUserInput == 3)
             {
+                game.SaveGoals();
             }
+            else if (menuUserInput == 4)
+            {
+                game.LoadGoals();
+            }    
+            Console.WriteLine();
         }
     
 
