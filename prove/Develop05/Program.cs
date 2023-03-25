@@ -30,7 +30,8 @@ class Program
 
             if (menuUserInput == 1)
             {
-                string bStartMessage = "The types of Goals are:";
+                string startMessage = "The types of Goals are:";
+                Console.WriteLine(startMessage);
             }
             else if (menuUserInput == 2)
             {
