@@ -5,7 +5,7 @@ class Product
     private int _price;
     private int _quantity;
     private int _totalCost;
-    public string GetTotalCost()
+    public void GetTotalCost()
     {
         _totalCost = _price * _quantity;
     }
