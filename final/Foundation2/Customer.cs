@@ -1,8 +1,14 @@
 class Customer
 {
     private string _name;
-    private string _address;
-    public bool _inUSA;
+    private Address _address;
+    private bool _inUSA;
+    public Customer(string name, Address address)
+    {
+        _name = name;
+        _address = address;
+        _inUSA = address.IsAddressInUSA();
+    }
     public void SetIsInUSA(bool inUSA)
     {
         _inUSA = inUSA;
@@ -17,6 +23,6 @@ class Customer
     }
     public string GetAddressLocation()
     {
-        return _address;
+        return _address.GetFormatedAddress();
     }
 }

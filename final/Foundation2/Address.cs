@@ -10,7 +10,17 @@ class Address
         _city = city;
         _state = state;
         _country = country;
-        Console.WriteLine($"{street}. {city}, {state}. {country}");
+      //  Console.WriteLine($"{street}. {city}, {state}. {country}");
 
     }
+    public bool IsAddressInUSA()
+    {
+       return _country == "USA";
+    }
+    public string GetFormatedAddress()
+    {
+        string formatedAddress = $"{_street}. {_city}, {_state}. {_country}";
+        return formatedAddress;
+    }
+
 }
