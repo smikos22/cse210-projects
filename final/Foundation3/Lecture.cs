@@ -1,14 +1,13 @@
-public class Receptions : Event
+public class Lecture : Event
 {
-    private string _rsvpEmail;
+    private string _speaker;
     private int _capacity;
-    public Receptions (string eventTitle, string description, string date, string time, Address address, string rsvpEmail, int capacity)
+    public Lecture(string eventTitle, string description, string date, string time, Address address, int capacity, string speaker)
     : base(eventTitle, description, date, time, address)
     {
-        _rsvpEmail = rsvpEmail;
         _capacity = capacity;
-        Console.WriteLine("Reception");
-
+        _speaker = speaker;
+        Console.WriteLine("Lecture");
     }
     public override string GetFullDetails()
     {
@@ -17,8 +16,8 @@ public class Receptions : Event
         $"Date: {_date}\n"+
         $"Time: {_time}\n"+
         $"Address: {_address}\n"+
-        $"RSVP: {_rsvpEmail}\n"+
-        $"Capasity: {_capacity}";
+        $"Speaker: {_speaker}\n"+
+        $"Capacity: {_capacity}";
         return fullDetails;
         
     }
@@ -29,8 +28,4 @@ public class Receptions : Event
         return shortDescription;
         
     }
-
-
-
-
 }
